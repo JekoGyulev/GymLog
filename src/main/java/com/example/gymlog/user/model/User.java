@@ -37,6 +37,8 @@ public class User {
     private Role role;
     @Column(name = "registered_on", nullable = false)
     private LocalDate registeredOn;
+    @Column(name = "is_active",  nullable = false)
+    private boolean isActive;
 
     // Add necessary relationships
 
