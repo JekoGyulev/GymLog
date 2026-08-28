@@ -4,6 +4,8 @@ import com.example.gymlog.user.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
@@ -20,11 +22,11 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
                                         HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
 
-
-        // 2 checks : if the credentials are invalid OR the account has been disabled
-
-
-
+        if (exception instanceof BadCredentialsException) {
+            request.getSession(false).setAttribute("error", "Username or password is incorrect");
+        } else if (exception instanceof DisabledException) {
+            request.getSession(false).setAttribute("error", "Your account has been disabled");
+        }
 
         response.sendRedirect("/login");
     }
