@@ -23,9 +23,9 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
                                         AuthenticationException exception) throws IOException, ServletException {
 
         if (exception instanceof BadCredentialsException) {
-            request.getSession(false).setAttribute("error", "Username or password is incorrect");
+            request.getSession().setAttribute("error", "Username or password is incorrect");
         } else if (exception instanceof DisabledException) {
-            request.getSession(false).setAttribute("error", "Your account has been disabled");
+            request.getSession().setAttribute("error", "Your account has been disabled");
         }
 
         response.sendRedirect("/login");
