@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GymBeast App</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+<div class="ambient" aria-hidden="true"></div>
+
+<header>
+    <nav>
+        <a href="#" class="logo">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            GymBeast
+        </a>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How it works</a></li>
+            <li><a href="#stats">Stats</a></li>
+        </ul>
+        <button class="menu-toggle" aria-label="Open menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+    </nav>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-content">
+            <h1>Track lifts. <span class="gradient-text">Crush goals.</span></h1>
+            <p>GymBeast is the gym log app built for lifters who take progress seriously. Log sets, visualize gains, and never lose a PR again.</p>
+            <div class="hero-actions">
+                <a th:href="@{/register}" class="btn btn-primary">Start logging</a>
+                <a href="#features" class="btn btn-secondary">See the features</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Everything you need to <span class="gradient-text">level up</span></h2>
+                <p>No fluff. Just the tools serious lifters actually use to get stronger, week after week.</p>
+            </div>
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+                    </div>
+                    <h3>Smart Workout Log</h3>
+                    <p>Record sets, reps, weight, and RPE in seconds. Auto-fill previous numbers so you can focus on the lift.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>
+                    </div>
+                    <h3>Progress Tracking</h3>
+                    <p>Watch your strength curve climb with beautiful charts for every exercise and muscle group.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23l-1.21-9.12"/></svg>
+                    </div>
+                    <h3>PR Alerts</h3>
+                    <p>Hit a new personal record? IronLog celebrates it instantly and keeps a trophy case of your best lifts.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                    <h3>Built for the Gym</h3>
+                    <p>Large buttons, offline mode, and a dark interface that won't blind you between sets.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3>Train with Friends</h3>
+                    <p>Share routines, compare weekly volume, and keep each other accountable.</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <h3>Rest Timer</h3>
+                    <p>Built-in rest timer with audio cues so you never rush or stall between sets.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats" id="stats" aria-label="Key stats">
+
+        <!--TODO: Make those values dynamic later-->
+
+        <div class="stat">
+            <h3>500K+</h3>
+            <p>Workouts logged</p>
+        </div>
+        <div class="stat">
+            <h3>12M+</h3>
+            <p>Sets tracked</p>
+        </div>
+        <div class="stat">
+            <h3>4.9</h3>
+            <p>App store rating</p>
+        </div>
+        <div class="stat">
+            <h3>180+</h3>
+            <p>Exercises</p>
+        </div>
+    </section>
+
+    <section id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>Start training smarter in <span class="gradient-text">3 steps</span></h2>
+                <p>No complicated setup. Just open the app, pick a plan, and start lifting.</p>
+            </div>
+            <div class="steps">
+                <article class="step">
+                    <h3>Create your profile</h3>
+                    <p>Set your bodyweight, training experience, and the goals you want to chase.</p>
+                </article>
+                <article class="step">
+                    <h3>Pick or build a routine</h3>
+                    <p>Choose from proven programs or build your own split with our exercise library.</p>
+                </article>
+                <article class="step">
+                    <h3>Log and improve</h3>
+                    <p>Track every session, review trends, and break PRs with data-driven adjustments.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta" id="download">
+        <div class="cta-box">
+            <h2>Ready to make every rep count?</h2>
+            <p>Join thousands of lifters who turned their phone into the ultimate training partner.</p>
+            <a th:href="@{/register}" class="btn btn-primary">Get Started</a>
+        </div>
+    </section>
+</main>
+
+<footer th:insert="fragments/footer :: footer"></footer>
+
+</body>
+</html>

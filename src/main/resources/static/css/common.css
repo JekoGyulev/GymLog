@@ -1,0 +1,24 @@
+:root {
+    --bg: #0b0b0d;
+    --bg-2: #121218;
+    --surface: #1a1a22;
+    --surface-2: #23232e;
+    --text: #f5f5f7;
+    --muted: #a0a0ac;
+    --accent: #ff6b2c;
+    --accent-2: #00d4aa;
+    --accent-glow: rgba(255, 107, 44, 0.35);
+    --accent-glow-2: rgba(0, 212, 170, 0.25);
+    --radius: 18px;
+    --max: 1200px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
