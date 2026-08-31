@@ -4,6 +4,7 @@ import com.example.gymlog.security.UserPrincipal;
 import com.example.gymlog.user.model.User;
 import com.example.gymlog.user.repository.UserRepository;
 import com.example.gymlog.user.service.UserService;
+import com.example.gymlog.web.dto.RegisterRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,5 +43,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .build();
 
         return userPrincipal;
+    }
+
+    @Override
+    public User register(RegisterRequest registerRequest) {
+        return null;
     }
 }
