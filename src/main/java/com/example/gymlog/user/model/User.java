@@ -27,7 +27,7 @@ public class User {
     private String lastName;
     @Column(nullable = false, unique = true)
     private String username;
-    @Column
+    @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
     private String password;
@@ -41,8 +41,6 @@ public class User {
     private LocalDate registeredOn;
     @Column(name = "is_active",  nullable = false)
     private boolean isActive;
-
-    // Add necessary relationships
 
 
 }
