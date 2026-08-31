@@ -132,6 +132,20 @@ nav {
     transition: ease-in-out .2s;
 }
 
+.sign-up-btn {
+    background: linear-gradient(135deg, var(--accent), #ff8f50);
+    padding: 0.5rem 1.5rem;
+    box-shadow: 0 8px 24px var(--accent-glow);
+    font-size: 0.85rem;
+    color: #fff;
+}
+.sign-up-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px var(--accent-glow);
+    transition: ease-in-out .2s;
+}
+
+
 .btn-secondary {
     background: transparent;
     color: var(--text);
