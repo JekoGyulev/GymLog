@@ -25,6 +25,7 @@ public class RegisterRequest {
     @NotBlank(message = "The password confirmation field must be filled in")
     private String confirmPassword;
     @Email(message = "Your email is invalid")
+    @NotBlank(message = "Your email must be filled in")
     private String email;
 
 
