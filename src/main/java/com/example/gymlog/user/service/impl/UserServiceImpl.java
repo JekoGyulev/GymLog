@@ -67,11 +67,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         log.info("New user with ID [{}] and username [{}] has registered", user.getId(), user.getUsername());
 
-        if (user.getEmail() != null) {
-            // Publish event with kafka to a microservice that sends email to the newly registered user
-            // Microservice Name : GymBeast Notification Service
-        }
-
+        // Publish event with kafka to a microservice that sends email to the newly registered user
+        // Microservice Name : GymBeast Notification Service
 
         return user;
     }
