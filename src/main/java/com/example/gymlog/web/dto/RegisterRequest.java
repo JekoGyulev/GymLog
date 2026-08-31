@@ -14,7 +14,8 @@ import lombok.*;
 @AllArgsConstructor
 public class RegisterRequest {
 
-    @NotBlank(message = "Your full name must be filled in")
+    @NotBlank(message = "Your first and last name must be filled in")
+    @Pattern(regexp = "^[A-Z][a-z]+ [A-Z][a-z]+$", message = "Enter your first and last name, starting with a capital letter." )
     private String fullName;
     @Size(min = 5, message = "Your username must be at least 5 characters long")
     private String username;

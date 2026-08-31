@@ -4,6 +4,7 @@ package com.example.gymlog.user.model;
 import com.example.gymlog.user.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -30,12 +31,13 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(name = "profile_picture_url", nullable = false)
+    @Column(name = "profile_picture_url", unique = true)
     private String profilePictureUrL;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
     @Column(name = "registered_on", nullable = false)
+    @CreationTimestamp
     private LocalDate registeredOn;
     @Column(name = "is_active",  nullable = false)
     private boolean isActive;

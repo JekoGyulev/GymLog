@@ -35,9 +35,9 @@
             <form id="register-form" th:action="@{/register}" th:method="POST" th:object="${registerRequest}">
 
                 <div class="form-group">
-                    <label for="full-name">Full name</label>
+                    <label for="first-and-last-name">First & Last Name</label>
                     <div class="input-wrapper">
-                        <input th:field="*{fullName}" type="text" id="full-name" name="full-name" placeholder="Alex Steel" autocomplete="name"/>
+                        <input th:field="*{fullName}" type="text" id="first-and-last-name" name="first-and-last-name" placeholder="Alex Steel" autocomplete="name"/>
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
