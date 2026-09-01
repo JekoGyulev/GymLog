@@ -255,6 +255,21 @@ nav.links a.active {
     display: block;
 }
 
+.avatar-img,
+.avatar-no-img {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.avatar-img:hover,
+.avatar-no-img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 8px rgba(110, 240, 208, 0.3);
+}
+
+.avatar-img:hover img {
+    filter: brightness(1.08);
+}
+
 main {
     max-width: var(--max);
     margin: 0 auto;

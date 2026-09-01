@@ -13,13 +13,13 @@
 
 <header>
     <div class="nav">
-        <a class="logo" th:href="@{/}">
+        <a class="logo" th:href="@{/home}">
             <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
             </svg>
             GymBeast</a>
         <nav class="links">
-            <a th:href="@{/home}" class="active">Dashboard</a>
+            <a th:href="@{/home}" class="active">Home</a>
             <a th:href="@{/users/${user.id}/workouts}">Workouts</a>
             <a th:href="@{/users/${user.id}/progress}">Progress</a>
             <a th:href="@{/users/${user.id}/prs}">PRs</a>
@@ -31,14 +31,14 @@
         <div class="nav-right">
             <a class="icon-btn" th:href="@{/notifications}" aria-label="Notifications">🔔<span class="dot"></span></a>
 
-            <a th:if="${user.profilePictureUrL != null}"
+            <a th:if="${!#strings.isEmpty(user.profilePictureUrL)}"
                class="avatar-img"
                th:href="@{/users/profile}"
                aria-label="Profile">
                 <img th:src="${user.profilePictureUrL}" alt="Profile picture">
             </a>
 
-            <a th:if="${user.profilePictureUrL == null}"
+            <a th:if="${#strings.isEmpty(user.profilePictureUrL)}"
                class="avatar-no-img"
                th:text="${#strings.concat(user.firstName.substring(0, 1), user.lastName.substring(0,1))}"
                th:href="@{/users/profile}">
