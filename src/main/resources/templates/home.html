@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>GymBeast - Home</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+<div class="bg-image"></div>
+<div class="ambient"></div>
+
+<header>
+    <div class="nav">
+        <a class="logo" th:href="@{/}">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            GymBeast</a>
+        <nav class="links">
+            <a th:href="@{/home}" class="active">Dashboard</a>
+            <a th:href="@{/users/${user.id}/workouts}">Workouts</a>
+            <a th:href="@{/users/${user.id}/progress}">Progress</a>
+            <a th:href="@{/users/${user.id}/prs}">PRs</a>
+            <a th:href="@{/users/${user.id}/nutrition}">Nutrition</a>
+            <a th:href="@{/exercise-catalog}">Exercises</a>
+            <a th:href="@{/users/profile}">Profile</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/dashboard}">Admin</a>
+        </nav>
+        <div class="nav-right">
+            <a class="icon-btn" th:href="@{/notifications}" aria-label="Notifications">🔔<span class="dot"></span></a>
+
+            <a th:if="${user.profilePictureUrL != null}"
+               class="avatar-img"
+               th:href="@{/users/profile}"
+               aria-label="Profile">
+                <img th:src="${user.profilePictureUrL}" alt="Profile picture">
+            </a>
+
+            <a th:if="${user.profilePictureUrL == null}"
+               class="avatar-no-img"
+               th:text="${#strings.concat(user.firstName.substring(0, 1), user.lastName.substring(0,1))}"
+               th:href="@{/users/profile}">
+            </a>
+
+        </div>
+        <a class="logout" th:href="@{/logout}">Logout</a>
+    </div>
+</header>
+
+<main>
+    <section class="greet">
+        <div>
+            <h1>Welcome back, <em th:text="${user.username}"></em></h1>
+        </div>
+        <div class="streak">🔥 <span>18-day streak</span></div>
+    </section>
+
+    <!-- Today + weekly goal -->
+    <div class="grid">
+
+        <article class="card today">
+            <div class="card-head">
+                <h2>Today's Workout</h2>
+                <span class="tag">Scheduled</span>
+            </div>
+            <div class="title">Push Day — Chest &amp; Triceps</div>
+            <div class="meta">
+                <span>⏱ ~62 min</span>
+                <span>🎯 6 exercises · 22 sets</span>
+                <span>📊 Est. volume 8,450 kg</span>
+            </div>
+            <div class="ex-list">
+                <div class="ex"><span class="num">1</span><span class="name">Barbell Bench Press</span><span class="pr-flag">PR TARGET</span><span class="sets">4 × 5 @ 102.5 kg</span></div>
+                <div class="ex"><span class="num">2</span><span class="name">Incline Dumbbell Press</span><span class="sets">4 × 8 @ 34 kg</span></div>
+                <div class="ex"><span class="num">3</span><span class="name">Weighted Dips</span><span class="sets">3 × 10 @ +20 kg</span></div>
+                <div class="ex"><span class="num">4</span><span class="name">Cable Fly</span><span class="sets">3 × 14 @ 22 kg</span></div>
+                <div class="ex"><span class="num">5</span><span class="name">Overhead Rope Extension</span><span class="sets">4 × 12 @ 30 kg</span></div>
+                <div class="ex"><span class="num">6</span><span class="name">Lateral Raise Drop-set</span><span class="sets">4 × 15 @ 12 kg</span></div>
+            </div>
+            <div class="btn-row">
+                <a class="btn btn-primary" href="#start">▶ Start Workout</a>
+                <a class="btn btn-ghost" href="#edit">Edit plan</a>
+                <a class="btn btn-ghost" href="#skip">Reschedule</a>
+            </div>
+        </article>
+
+
+
+<!--  This is when no workout is chosen for today      <article class="card today">-->
+<!--            <div class="today-empty">-->
+<!--                <div class="orb">🎯</div>-->
+<!--                <h3>No workout picked for today</h3>-->
+<!--                <p>Pick a session from your program or choose a quick workout below. Consistency beats intensity — let's keep the streak alive.</p>-->
+<!--                <div class="suggestions">-->
+<!--                    <a class="suggestion" href="#push">-->
+<!--                        <span class="emoji">🏋️</span>-->
+<!--                        <span class="name">Push Day</span>-->
+<!--                        <span class="info">Chest · Shoulders · Triceps</span>-->
+<!--                    </a>-->
+<!--                    <a class="suggestion" href="#pull">-->
+<!--                        <span class="emoji">💪</span>-->
+<!--                        <span class="name">Pull Day</span>-->
+<!--                        <span class="info">Back · Biceps · Rear delts</span>-->
+<!--                    </a>-->
+<!--                    <a class="suggestion" href="#legs">-->
+<!--                        <span class="emoji">🦵</span>-->
+<!--                        <span class="name">Leg Day</span>-->
+<!--                        <span class="info">Quads · Hamstrings · Calves</span>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--                <div class="btn-row" style="justify-content:center;">-->
+<!--                    <a class="btn btn-primary" href="#workouts">Browse My Workouts</a>-->
+<!--                    <a class="btn btn-ghost" href="#builder">Build New Session</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </article>-->
+
+        <article class="card">
+            <div class="card-head">
+                <h2>Weekly Goal</h2>
+                <a class="link" href="#progress">Details</a>
+            </div>
+            <div class="goal-row">
+                <div class="val" style="font-size:2.1rem;font-weight:800;letter-spacing:-.04em;">3<span style="color:var(--muted);font-size:1.1rem;">/5</span></div>
+                <div style="color:var(--muted);font-size:.85rem;">sessions completed<br>2 to go — you're on pace 💪</div>
+            </div>
+            <div class="bar"><i style="width:60%"></i></div>
+
+            <div class="muscle">
+                <div class="row"><div><span>Chest</span><b>92%</b></div><div class="bar"><i style="width:92%"></i></div></div>
+                <div class="row"><div><span>Back</span><b>78%</b></div><div class="bar"><i style="width:78%"></i></div></div>
+                <div class="row"><div><span>Legs</span><b>64%</b></div><div class="bar"><i style="width:64%"></i></div></div>
+                <div class="row"><div><span>Shoulders &amp; Arms</span><b>45%</b></div><div class="bar"><i style="width:45%"></i></div></div>
+            </div>
+        </article>
+    </div>
+
+    <!-- Quick stats -->
+    <div class="stats">
+        <div class="card stat">
+            <div class="ico">🏋️</div>
+            <div class="val">128</div>
+            <div class="lbl">Total workouts</div>
+            <div class="delta up">▲ 12 this month</div>
+        </div>
+        <div class="card stat">
+            <div class="ico">📦</div>
+            <div class="val">42.6<small style="font-size:1rem;color:var(--muted)">t</small></div>
+            <div class="lbl">Volume lifted</div>
+            <div class="delta up">▲ 8.4% vs last month</div>
+        </div>
+        <div class="card stat">
+            <div class="ico">⏱</div>
+            <div class="val">57<small style="font-size:1rem;color:var(--muted)">min</small></div>
+            <div class="lbl">Avg. session</div>
+            <div class="delta down">▼ 4 min vs last week</div>
+        </div>
+        <div class="card stat">
+            <div class="ico">🏆</div>
+            <div class="val">14</div>
+            <div class="lbl">PRs this year</div>
+            <div class="delta up">▲ 3 in the last 30 days</div>
+        </div>
+    </div>
+
+    <!-- Progress chart + recent -->
+    <div class="grid" id="progress">
+        <article class="card">
+            <div class="card-head">
+                <h2>Progress — Weekly Volume</h2>
+                <a class="link" href="#progress">Last 8 weeks</a>
+            </div>
+            <div class="chart">
+                <div class="col"><span class="v">18.2t</span><span class="b" style="height:46%"></span></div>
+                <div class="col"><span class="v">19.4t</span><span class="b" style="height:52%"></span></div>
+                <div class="col"><span class="v">17.6t</span><span class="b" style="height:43%"></span></div>
+                <div class="col"><span class="v">22.1t</span><span class="b" style="height:63%"></span></div>
+                <div class="col"><span class="v">23.8t</span><span class="b" style="height:70%"></span></div>
+                <div class="col"><span class="v">21.5t</span><span class="b" style="height:60%"></span></div>
+                <div class="col"><span class="v">25.9t</span><span class="b" style="height:80%"></span></div>
+                <div class="col peak"><span class="v">28.4t</span><span class="b" style="height:94%"></span></div>
+            </div>
+            <div class="xaxis">
+                <span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>W7</span><span>Now</span>
+            </div>
+            <div class="legend">
+                <span><i style="background:var(--accent)"></i>Weekly tonnage</span>
+                <span><i style="background:var(--accent-2)"></i>Best week</span>
+                <span style="margin-left:auto;color:var(--accent-2);font-weight:600;">▲ 56% since W1</span>
+            </div>
+        </article>
+
+        <article class="card" id="workouts">
+            <div class="card-head">
+                <h2>Recent Workouts</h2>
+                <a class="link" href="#workouts">View all</a>
+            </div>
+            <div class="recent">
+                <div class="w-item">
+                    <div class="w-date"><b>30</b><span>Aug</span></div>
+                    <div class="w-main"><strong>Pull Day — Back &amp; Biceps</strong><p>7 exercises · 24 sets · 68 min</p></div>
+                    <div class="w-vol"><b>9.2t</b><span>volume</span></div>
+                </div>
+                <div class="w-item">
+                    <div class="w-date"><b>28</b><span>Aug</span></div>
+                    <div class="w-main"><strong>Leg Day — Squat Focus</strong><p>6 exercises · 21 sets · 74 min</p></div>
+                    <div class="w-vol"><b>11.8t</b><span>volume</span></div>
+                </div>
+                <div class="w-item">
+                    <div class="w-date"><b>26</b><span>Aug</span></div>
+                    <div class="w-main"><strong>Push Day — Overhead</strong><p>6 exercises · 20 sets · 59 min</p></div>
+                    <div class="w-vol"><b>7.9t</b><span>volume</span></div>
+                </div>
+                <div class="w-item">
+                    <div class="w-date"><b>24</b><span>Aug</span></div>
+                    <div class="w-main"><strong>Conditioning + Core</strong><p>5 exercises · 15 sets · 41 min</p></div>
+                    <div class="w-vol"><b>3.4t</b><span>volume</span></div>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <!-- PRs -->
+    <div class="section-title" id="prs">
+        <h2>Personal Records</h2>
+        <a class="link" href="#prs">All lifts →</a>
+    </div>
+    <div class="prs">
+        <div class="card pr">
+            <div class="lift">Bench Press</div>
+            <div class="kg">110 <small>kg</small></div>
+            <span class="when">+5 kg · 12 days ago</span>
+        </div>
+        <div class="card pr">
+            <div class="lift">Back Squat</div>
+            <div class="kg">160 <small>kg</small></div>
+            <span class="when">+7.5 kg · 6 days ago</span>
+        </div>
+        <div class="card pr">
+            <div class="lift">Deadlift</div>
+            <div class="kg">195 <small>kg</small></div>
+            <span class="when">+10 kg · 3 weeks ago</span>
+        </div>
+        <div class="card pr">
+            <div class="lift">Overhead Press</div>
+            <div class="kg">72.5 <small>kg</small></div>
+            <span class="when">+2.5 kg · 9 days ago</span>
+        </div>
+    </div>
+
+    <!-- Extras -->
+    <div class="row2">
+        <article class="card" id="nutrition">
+            <div class="card-head"><h2>This Week</h2></div>
+            <div class="sched">
+                <div class="d done"><i></i>Mon · Pull Day <span>✓ 9.2t</span></div>
+                <div class="d today-d"><i></i>Tue · Push Day <span>Today</span></div>
+                <div class="d"><i></i>Wed · Rest / Mobility <span>—</span></div>
+                <div class="d"><i></i>Thu · Leg Day <span>Planned</span></div>
+                <div class="d"><i></i>Fri · Upper Accessory <span>Planned</span></div>
+                <div class="d done"><i></i>Sat · Conditioning <span>✓ 3.4t</span></div>
+            </div>
+        </article>
+
+        <article class="card" id="exercises">
+            <div class="card-head"><h2>Achievements</h2></div>
+            <div class="badges">
+                <span class="badge on">🔥 18-day streak</span>
+                <span class="badge on">💯 100 workouts</span>
+                <span class="badge on">🏆 3 PRs / month</span>
+                <span class="badge">🌙 Early bird ×20</span>
+                <span class="badge">🐺 200kg deadlift</span>
+                <span class="badge">📅 Perfect month</span>
+            </div>
+            <p style="color:var(--muted);font-size:.85rem;margin-top:16px;">3 more sessions to unlock <b style="color:var(--text)">Perfect Month</b>.</p>
+        </article>
+
+        <article class="card" id="profile">
+            <div class="card-head"><h2>Quote of The Day</h2></div>
+            <p class="quote">"Motivation gets you started. Habit keeps you going."
+                <span>— Jeko Gyulev</span></p>
+        </article>
+    </div>
+</main>
+
+<footer th:insert="fragments/footer :: footer"></footer>
+
+</body>
+</html>

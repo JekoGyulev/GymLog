@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -71,6 +73,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         // Microservice Name : GymBeast Notification Service
 
         return user;
+    }
+
+    @Override
+    public User getUserById(UUID userId) {
+        return this.userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User with id [%s] was not found".formatted(userId)));
     }
 
     private User initUser(RegisterRequest registerRequest) {
