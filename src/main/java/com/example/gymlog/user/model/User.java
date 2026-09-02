@@ -60,7 +60,7 @@ public class User {
     private TrainingSplit primaryTrainingSplit;
     @Column(name = "frequency_per_week_to_gym")
     private Integer frequencyPerWeekToGym;
-    @Column(name = "birth_date")
+    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
     @Column(name = "profile_picture_url", unique = true)
     private String profilePictureUrL;

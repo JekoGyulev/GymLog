@@ -2,6 +2,7 @@ package com.example.gymlog.user.service.impl;
 
 import com.example.gymlog.security.UserPrincipal;
 import com.example.gymlog.user.enums.Role;
+import com.example.gymlog.user.enums.Unit;
 import com.example.gymlog.user.model.User;
 import com.example.gymlog.user.repository.UserRepository;
 import com.example.gymlog.user.service.UserService;
@@ -88,6 +89,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .email(registerRequest.getEmail())
                 .username(registerRequest.getUsername())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
+                .birthDate(registerRequest.getBirthDate())
+                .preferredUnit(Unit.METRIC)
                 .isActive(true)
                 .role(Role.USER)
                 .build();
