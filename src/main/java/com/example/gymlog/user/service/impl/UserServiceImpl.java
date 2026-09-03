@@ -1,6 +1,7 @@
 package com.example.gymlog.user.service.impl;
 
 import com.example.gymlog.security.UserPrincipal;
+import com.example.gymlog.storage.FileStorageService;
 import com.example.gymlog.user.enums.Role;
 import com.example.gymlog.user.enums.Unit;
 import com.example.gymlog.user.model.User;
@@ -9,6 +10,7 @@ import com.example.gymlog.user.service.UserService;
 import com.example.gymlog.utils.EmailAlreadyExists;
 import com.example.gymlog.utils.UsernameAlreadyExists;
 import com.example.gymlog.web.dto.RegisterRequest;
+import com.example.gymlog.web.dto.UpdatePhotoRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +18,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -25,11 +29,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final FileStorageService  fileStorageService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, FileStorageService fileStorageService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.fileStorageService = fileStorageService;
     }
 
 
@@ -80,6 +86,35 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User getUserById(UUID userId) {
         return this.userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User with id [%s] was not found".formatted(userId)));
+    }
+
+    @Override
+    public void updatePhoto(UpdatePhotoRequest updatePhotoRequest, boolean deletePhoto, UUID userId) {
+        
+        User user = getUserById(userId);
+
+        if (deletePhoto) {
+
+            String oldImageURL = user.getProfilePictureUrL();
+
+            user.setProfilePictureUrL(null);
+            this.userRepository.save(user);
+            this.fileStorageService.delete(oldImageURL);
+
+            return;
+        }
+
+        MultipartFile photoFile = updatePhotoRequest.getPhotoFile();
+
+        String contentType = photoFile.getContentType();
+
+        if (!List.of("image/jpeg", "image/png").contains(contentType)) {
+            throw new IllegalArgumentException("Only JPG and PNG are allowed");
+        }
+
+        String imageURL = this.fileStorageService.save(updatePhotoRequest.getPhotoFile());
+        user.setProfilePictureUrL(imageURL);
+        this.userRepository.save(user);
     }
 
     private User initUser(RegisterRequest registerRequest) {

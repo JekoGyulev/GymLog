@@ -39,7 +39,7 @@ public class User {
     private Double height;
     @Column(name = "body_fat_percentage")
     private Double bodyfatPercentage;
-    @Column(name = "preferred_metric")
+    @Column(name = "preferred_metric", nullable = false)
     @Enumerated(EnumType.STRING)
     private Unit preferredUnit;
     @Column
