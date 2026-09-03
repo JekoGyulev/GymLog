@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void updatePhoto(UpdatePhotoRequest updatePhotoRequest, boolean deletePhoto, UUID userId) {
-        
+
         User user = getUserById(userId);
 
         if (deletePhoto) {
@@ -112,8 +112,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new IllegalArgumentException("Only JPG and PNG are allowed");
         }
 
-        String imageURL = this.fileStorageService.save(updatePhotoRequest.getPhotoFile());
-        user.setProfilePictureUrL(imageURL);
+
+        String oldImageUrl =  user.getProfilePictureUrL();
+        String newImageUrl = this.fileStorageService.save(updatePhotoRequest.getPhotoFile());
+
+        this.fileStorageService.delete(oldImageUrl);
+        user.setProfilePictureUrL(newImageUrl);
         this.userRepository.save(user);
     }
 

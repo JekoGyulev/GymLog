@@ -41,6 +41,9 @@ public class FileStorageService {
     }
 
     public void delete(String oldImageURL) {
+
+        if (oldImageURL == null) return;
+
         String fileName = Paths.get(oldImageURL).getFileName().toString();
 
         Path path = uploadDir.resolve(fileName);
