@@ -8,7 +8,10 @@ import com.example.gymlog.user.model.User;
 import com.example.gymlog.user.repository.UserRepository;
 import com.example.gymlog.user.service.UserService;
 import com.example.gymlog.utils.EmailAlreadyExists;
+import com.example.gymlog.utils.InvalidPasswordException;
+import com.example.gymlog.utils.PasswordMismatchException;
 import com.example.gymlog.utils.UsernameAlreadyExists;
+import com.example.gymlog.web.dto.ChangePasswordRequest;
 import com.example.gymlog.web.dto.RegisterRequest;
 import com.example.gymlog.web.dto.UpdatePhotoRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -119,6 +122,33 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         this.fileStorageService.delete(oldImageUrl);
         user.setProfilePictureUrL(newImageUrl);
         this.userRepository.save(user);
+    }
+
+    @Override
+    public void changePassword(ChangePasswordRequest changePasswordRequest, User user) {
+
+        boolean currentPasswordMatches = this.passwordEncoder.matches(changePasswordRequest.getOldPassword(), user.getPassword());
+
+        if (!currentPasswordMatches) {
+            throw new InvalidPasswordException("Current password is invalid");
+        }
+
+        if (!changePasswordRequest.getNewPassword().equals(changePasswordRequest.getConfirmNewPassword())) {
+            throw new PasswordMismatchException("New passwords do not match");
+        }
+
+        if (this.passwordEncoder.matches(changePasswordRequest.getNewPassword(), user.getPassword())) {
+            throw new InvalidPasswordException("New password must be different from your current password");
+        }
+
+
+        user.setPassword(this.passwordEncoder.encode(changePasswordRequest.getNewPassword()));
+
+        this.userRepository.save(user);
+
+        // Send email to user's email address that he has changed his password
+
+        log.info("User with id [%s] changed password".formatted(user.getId()));
     }
 
     private User initUser(RegisterRequest registerRequest) {

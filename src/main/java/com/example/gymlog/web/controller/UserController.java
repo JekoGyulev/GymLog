@@ -4,13 +4,17 @@ package com.example.gymlog.web.controller;
 import com.example.gymlog.security.UserPrincipal;
 import com.example.gymlog.user.model.User;
 import com.example.gymlog.user.service.UserService;
+import com.example.gymlog.web.dto.ChangePasswordRequest;
 import com.example.gymlog.web.dto.UpdatePhotoRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -40,6 +44,7 @@ public class UserController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("userAge", Math.abs(Period.between(LocalDate.now(), user.getBirthDate()).getYears()));
         modelAndView.addObject("updatePhotoRequest", new UpdatePhotoRequest());
+        modelAndView.addObject("changePasswordRequest", new ChangePasswordRequest());
 
 
         return modelAndView;
@@ -58,7 +63,31 @@ public class UserController {
         return new ModelAndView("redirect:/users/profile");
     }
 
-    // TODO: Implement changing password - 2
+    @PatchMapping("/change-password")
+    public ModelAndView changePassword(@Valid ChangePasswordRequest changePasswordRequest,
+                                       BindingResult bindingResult,
+                                       @AuthenticationPrincipal UserPrincipal userPrincipal,
+                                       RedirectAttributes redirectAttributes) {
+
+        User user = this.userService.getUserById(userPrincipal.getId());
+
+
+        if (bindingResult.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("user-profile");
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("userAge", Math.abs(Period.between(LocalDate.now(), user.getBirthDate()).getYears()));
+            modelAndView.addObject("updatePhotoRequest", new UpdatePhotoRequest());
+            modelAndView.addObject("scrollTo", "change-password");
+            return modelAndView;
+        }
+
+        this.userService.changePassword(changePasswordRequest, user);
+
+        redirectAttributes.addFlashAttribute("successfulChangePassword", "You have successfully changed your password!" );
+
+        return new ModelAndView("redirect:/users/profile#change-password");
+    }
 
     // TODO: Implement delete account functionality
 

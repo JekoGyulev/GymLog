@@ -64,6 +64,25 @@ p.alert-warning {
     margin: 5px 0 0;
 }
 
+.successful-message {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 14px 16px;
+    margin-bottom: 24px;
+
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 12px;
+
+    color: #86efac;
+    font-size: 14px;
+    font-weight: 500;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+}
 
 
 /* ---------- Header ---------- */
