@@ -42,7 +42,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user-profile");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("userAge", Math.abs(Period.between(LocalDate.now(), user.getBirthDate()).getYears()));
+        modelAndView.addObject("userAge", Period.between(user.getBirthDate(), LocalDate.now()).getYears());
         modelAndView.addObject("updatePhotoRequest", new UpdatePhotoRequest());
         modelAndView.addObject("changePasswordRequest", new ChangePasswordRequest());
         modelAndView.addObject("updatePersonalInformationRequest", updatePersonalInformationRequest);
@@ -65,7 +65,7 @@ public class UserController {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("user-profile");
             modelAndView.addObject("user", user);
-            modelAndView.addObject("userAge", Math.abs(Period.between(LocalDate.now(), user.getBirthDate()).getYears()));
+            modelAndView.addObject("userAge", Period.between(user.getBirthDate(), LocalDate.now()).getYears());
             modelAndView.addObject("updatePersonalInformationRequest", updatePersonalInformationRequest);
             modelAndView.addObject("updatePhotoRequest", new UpdatePhotoRequest());
             modelAndView.addObject("changePasswordRequest", new ChangePasswordRequest());
@@ -109,7 +109,7 @@ public class UserController {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("user-profile");
             modelAndView.addObject("user", user);
-            modelAndView.addObject("userAge", Math.abs(Period.between(LocalDate.now(), user.getBirthDate()).getYears()));
+            modelAndView.addObject("userAge", Period.between(user.getBirthDate(), LocalDate.now()).getYears());
             modelAndView.addObject("updatePhotoRequest", new UpdatePhotoRequest());
             modelAndView.addObject("updatePersonalInformationRequest", updatePersonalInformationRequest);
             modelAndView.addObject("scrollTo", "change-password");
