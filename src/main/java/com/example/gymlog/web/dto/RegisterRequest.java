@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class RegisterRequest {
 
     @NotBlank(message = "Your first and last name must be filled in")
-    @Pattern(regexp = "^[A-Z][a-z]+ [A-Z][a-z]+$", message = "Enter your first and last name, starting with a capital letter." )
+    @Pattern(regexp = "[A-Z][a-z]*(?:['-][A-Z][a-z]*)* [A-Z][a-z]*(?:['-][A-Z][a-z]*)*", message = "Enter your first and last name, starting with a capital letter" )
     private String fullName;
     @NotNull(message = "Your birthdate must be filled in")
     @DateTimeFormat(pattern = "dd/MM/yyyy")

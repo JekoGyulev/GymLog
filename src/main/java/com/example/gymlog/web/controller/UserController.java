@@ -4,8 +4,7 @@ package com.example.gymlog.web.controller;
 import com.example.gymlog.security.UserPrincipal;
 import com.example.gymlog.user.model.User;
 import com.example.gymlog.user.service.UserService;
-import com.example.gymlog.web.dto.ChangePasswordRequest;
-import com.example.gymlog.web.dto.UpdatePhotoRequest;
+import com.example.gymlog.web.dto.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,7 +36,8 @@ public class UserController {
 
         User user = this.userService.getUserById(userPrincipal.getId());
 
-        // TODO: Add ProfileEditRequest as object to this view - when reached 3
+        UpdatePersonalInformationRequest updatePersonalInformationRequest = DtoMapper.fromUserToPersonalInformationRequest(user);
+
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user-profile");
@@ -45,12 +45,43 @@ public class UserController {
         modelAndView.addObject("userAge", Math.abs(Period.between(LocalDate.now(), user.getBirthDate()).getYears()));
         modelAndView.addObject("updatePhotoRequest", new UpdatePhotoRequest());
         modelAndView.addObject("changePasswordRequest", new ChangePasswordRequest());
+        modelAndView.addObject("updatePersonalInformationRequest", updatePersonalInformationRequest);
 
 
         return modelAndView;
     }
 
-    // TODO: Implement changing personal information and body information functionality with 1 PATCH handler method - 3
+
+    @PatchMapping("/update-personal-info")
+    public ModelAndView updatePersonalInformation(@AuthenticationPrincipal UserPrincipal userPrincipal,
+                                                  @Valid UpdatePersonalInformationRequest updatePersonalInformationRequest,
+                                                  BindingResult bindingResult,
+                                                  RedirectAttributes redirectAttributes) {
+
+        User user = this.userService.getUserById(userPrincipal.getId());
+
+        if (bindingResult.hasErrors()) {
+
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("user-profile");
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("userAge", Math.abs(Period.between(LocalDate.now(), user.getBirthDate()).getYears()));
+            modelAndView.addObject("updatePersonalInformationRequest", updatePersonalInformationRequest);
+            modelAndView.addObject("updatePhotoRequest", new UpdatePhotoRequest());
+            modelAndView.addObject("changePasswordRequest", new ChangePasswordRequest());
+            modelAndView.addObject("scrollTo", "personal-info");
+            modelAndView.addObject("editing", true);
+
+            return modelAndView;
+        }
+
+
+        this.userService.updatePersonalInfo(updatePersonalInformationRequest, user);
+
+        redirectAttributes.addFlashAttribute("successfulPersonalInfoUpdate", "You have successfully updated your information!");
+
+        return new ModelAndView("redirect:/users/profile#personal-info");
+    }
 
 
     @PatchMapping("/update-photo")
@@ -71,6 +102,8 @@ public class UserController {
 
         User user = this.userService.getUserById(userPrincipal.getId());
 
+        UpdatePersonalInformationRequest updatePersonalInformationRequest = DtoMapper.fromUserToPersonalInformationRequest(user);
+
 
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView();
@@ -78,6 +111,7 @@ public class UserController {
             modelAndView.addObject("user", user);
             modelAndView.addObject("userAge", Math.abs(Period.between(LocalDate.now(), user.getBirthDate()).getYears()));
             modelAndView.addObject("updatePhotoRequest", new UpdatePhotoRequest());
+            modelAndView.addObject("updatePersonalInformationRequest", updatePersonalInformationRequest);
             modelAndView.addObject("scrollTo", "change-password");
             return modelAndView;
         }

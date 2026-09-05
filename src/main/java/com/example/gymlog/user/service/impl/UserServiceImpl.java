@@ -13,6 +13,7 @@ import com.example.gymlog.utils.PasswordMismatchException;
 import com.example.gymlog.utils.UsernameAlreadyExists;
 import com.example.gymlog.web.dto.ChangePasswordRequest;
 import com.example.gymlog.web.dto.RegisterRequest;
+import com.example.gymlog.web.dto.UpdatePersonalInformationRequest;
 import com.example.gymlog.web.dto.UpdatePhotoRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,6 +150,24 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         // Send email to user's email address that he has changed his password
 
         log.info("User with id [%s] changed password".formatted(user.getId()));
+    }
+
+    @Override
+    public void updatePersonalInfo(UpdatePersonalInformationRequest updatePersonalInformationRequest, User user) {
+
+        user.setFirstName(updatePersonalInformationRequest.getFirstName());
+        user.setLastName(updatePersonalInformationRequest.getLastName());
+        user.setUsername(updatePersonalInformationRequest.getUsername());
+        user.setEmail(updatePersonalInformationRequest.getEmail());
+        user.setBirthDate(updatePersonalInformationRequest.getBirthDate());
+        user.setGender(updatePersonalInformationRequest.getGender());
+        user.setBio(updatePersonalInformationRequest.getBio());
+        user.setLocation(updatePersonalInformationRequest.getLocation());
+        user.setPhoneNumber(updatePersonalInformationRequest.getPhone());
+
+        this.userRepository.save(user);
+
+        log.info("User with id [%s] updated his personal information".formatted(user.getId()));
     }
 
     private User initUser(RegisterRequest registerRequest) {
